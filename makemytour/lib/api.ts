@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL!;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // ✅ LOGIN
 export const login = async (email: string, password: string) => {
@@ -46,7 +46,7 @@ export const addflight = async (
   price: number,
   availableSeats: number
 ) => {
-  const res = await fetch(BASE_URL, {
+  const res = await fetch(`${BASE_URL}/flights/add`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
