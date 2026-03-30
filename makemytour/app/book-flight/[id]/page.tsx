@@ -35,7 +35,8 @@ import {
 } from "lucide-react";
 
 interface Flight {
-    id: string;
+    _id: string;
+    id?: string;
     flightName: string;
     from: string;
     to: string;
@@ -104,28 +105,34 @@ export default function BookFlightPage() {
     const grandTotal = totalPrice + taxes;
 
     const handleBooking = async () => {
-        try {
-            const data = await handleflightbooking(
-                user?.id,
-                flight.id,
-                quantity,
-                grandTotal
-            );
+  try {
+    const userId = user?._id ?? user?.id;
+const flightId = flight?._id ?? flight?.id;
 
-            const updatedUser = {
-                ...user,
-                bookings: [...user.bookings, data],
-            };
+if (!userId || !flightId) {
+  console.error("Missing user or flight ID");
+  return;
+}
 
-            dispatch(setUser(updatedUser));
+const data = await handleflightbooking(
+  userId,
+  flightId,
+  quantity,
+  grandTotal
+);
 
-            setOpen(false);
-            router.push("/profile");
-        } catch (error) {
-            console.log(error);
-        }
+    const updatedUser = {
+      ...user,
+      bookings: [...(user?.bookings || []), data],
     };
 
+    dispatch(setUser(updatedUser));
+
+   router.push(`/payment/${flight._id || flight.id}?qty=${quantity}`)
+  } catch (error) {
+    console.log(error);
+  }
+};
     return (
         <div className="min-h-screen bg-gray-100">
 
@@ -315,13 +322,11 @@ export default function BookFlightPage() {
 
       {/* 🚀 BUTTON */}
       <Button
-        className="w-full mt-4 bg-red-600"
-        onClick={() =>
-          router.push(`/payment/${flight.id}?qty=${quantity}`)
-        }
-      >
-        Proceed to Pay
-      </Button>
+  className="w-full mt-4 bg-red-600"
+  onClick={handleBooking}
+>
+  Proceed to Pay
+</Button>
 
     </DialogContent>
   </Dialog>

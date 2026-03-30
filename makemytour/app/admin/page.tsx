@@ -130,7 +130,7 @@ function AddEditFlight({ flight }: { flight: Flight | null }) {
   }
 
   // refresh browser after add or update
-  window.location.reload()
+  
 }
 
   return (
@@ -207,7 +207,7 @@ function AddEditHotel({ hotel }: { hotel: Hotel | null }) {
     }
 
     // refresh page
-    window.location.href = "/admin?tab=hotels"
+    
   }
 
   return (

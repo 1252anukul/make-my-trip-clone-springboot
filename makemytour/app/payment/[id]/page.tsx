@@ -79,12 +79,20 @@ export default function PaymentPage() {
   // ✅ PAYMENT FUNCTION
   const handlePayment = async () => {
     try {
-      const data = await handleflightbooking({
-        userId: user?._id || user?.id,
-        flightId: flight._id,
-        seats: quantity,
-        price: total,
-      });
+      const userId = user?._id ?? user?.id;
+const flightId = flight?._id ?? flight?.id;
+
+if (!userId || !flightId) {
+  console.error("Missing user or flight ID");
+  return;
+}
+
+const data = await handleflightbooking(
+  userId,
+  flightId,
+  quantity,
+  total
+);
 
       // ✅ Update Redux
       const updatedUser = {

@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/users";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL!;
 
 // ✅ LOGIN
 export const login = async (email: string, password: string) => {
@@ -46,7 +46,7 @@ export const addflight = async (
   price: number,
   availableSeats: number
 ) => {
-  const res = await fetch("http://localhost:8080/flights/add", {
+  const res = await fetch(BASE_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export const editflight = async (
   availableSeats: number
 ) => {
 
-  const res = await fetch(`http://localhost:8080/flights/update/${id}`, {
+  const res = await fetch(`${BASE_URL}/flights/update/${id}`, {
 
     method: "PUT",
 
@@ -102,7 +102,7 @@ export const editflight = async (
   return res.json()
 }
 export const getflights = async () => {
-  const res = await fetch("http://localhost:8080/flights")
+  const res = await fetch(`${BASE_URL}/flights`)
 
   if (!res.ok) {
     throw new Error("Failed to fetch flights")
@@ -112,7 +112,7 @@ export const getflights = async () => {
 }
 export const deleteflight = async (id: string) => {
 
-  const res = await fetch(`http://localhost:8080/flights/delete/${id}`, {
+  const res = await fetch(`${BASE_URL}/flights/delete/${id}`, {
     method: "DELETE"
   })
 
@@ -126,22 +126,33 @@ export const deleteflight = async (id: string) => {
 export const handleflightbooking = async (
   userId: string,
   flightId: string,
-  quantity: number,
-  total: number
+  seats: number,
+  price: number
 ) => {
-  const res = await fetch("http://localhost:8080/book-flight", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      userId,
-      flightId,
-      quantity,
-      total,
-    }),
-  });
+
+  const res = await fetch(
+    "https://make-my-trip-clone-springboot-8-bw2w.onrender.com/api/booking/flight",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        flightId,
+        seats,
+        price,
+      }),
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Booking failed");
+  }
 
   return res.json();
 };
+
 export const addhotel = async (
   hotelName: string,
   location: string,
@@ -150,7 +161,7 @@ export const addhotel = async (
   amenities: string
 ) => {
 
-  const res = await fetch("http://localhost:8080/hotels/add", {
+  const res = await fetch(`${BASE_URL}/hotels/add`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -175,7 +186,7 @@ export const edithotel = async (
   availableRooms: number,
   amenities: string
 ) => {
-  const res = await fetch(`http://localhost:8080/hotels/update/${id}`, {
+  const res = await fetch(`${BASE_URL}/hotels/update/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -205,13 +216,15 @@ export const handlehotelbooking = async (
 };
 // HOTEL APIs
 export const gethotels = async () => {
-  const res = await fetch("http://localhost:8080/hotels")
+  const res = await fetch(`${BASE_URL}/hotels`)
   return res.json()
 }
 
 // ---------------- USERS ----------------
 export const getuserbyemail = async (email: string) => {
-  const res = await fetch(`http://localhost:8080/users/email/${email}`)
+  const res = await fetch(`${BASE_URL}/users/email/${email}`, {
+    method: "GET"
+  })
 
   if (!res.ok) {
     throw new Error("User not found")
@@ -220,17 +233,17 @@ export const getuserbyemail = async (email: string) => {
   return res.json()
 }
 export const getflight = async () => {
-  const res = await fetch("http://localhost:8080/flights")
+  const res = await fetch(`${BASE_URL}/flights`)
   return res.json()
 }
 
 export const gethotel = async () => {
-  const res = await fetch("http://localhost:8080/hotels")
+  const res = await fetch("process.env.NEXT_PUBLIC_API_URL")
   return res.json()
 }
 
 export const editprofile = async (data: any) => {
-  const res = await fetch("http://localhost:8080/api/user/update", {
+  const res = await fetch("process.env.NEXT_PUBLIC_API_URL}", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
