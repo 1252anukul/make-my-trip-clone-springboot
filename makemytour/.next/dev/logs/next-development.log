@@ -1,5 +1,6 @@
-[00:00:01.106] Server  LOG     ✓ Ready in 912ms
-[00:00:27.733] Server  LOG     Redux user: null
-[00:00:27.915] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:28.025] Browser LOG     Redux user: null
-[00:00:28.025] Browser LOG     Redux user: null
+[00:00:00.941] Server  LOG     ✓ Ready in 707ms
+[00:00:09.476] Server  LOG     Redux user: null
+[00:00:09.705] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:09.852] Browser LOG     Redux user: null
+[00:00:09.852] Browser LOG     Redux user: null
+[00:00:09.852] Browser ERROR   {}
